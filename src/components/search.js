@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SEARCH_ACTIONS } from "../App";
 
 export default function Search(props) {
-  const { searchDispacher } = props;
+  const { searchDispacher, setSubmitted } = props;
   const [search, setSearch] = useState(``);
 
   const handleSearchStringChange = (e) => {
@@ -14,6 +14,15 @@ export default function Search(props) {
     searchDispacher({
       type: SEARCH_ACTIONS.SET_SEARCH_STRING,
       payload: { searchString: search },
+    });
+    setSubmitted(prev => !prev);
+  };
+
+  const handleGroupSelection = (e) => {
+    console.log(e.target.value, "it worked");
+    searchDispacher({
+      type: SEARCH_ACTIONS.SET_SEARCH_GROUP,
+      payload: { searchGroup: e.target.value },
     });
   };
 
@@ -56,11 +65,14 @@ export default function Search(props) {
                     style={{ width: "100%" }}
                     value={search}
                     onChange={handleSearchStringChange}
+                    required
                   />
                 </form>
                 <div>
-                  <select style={{ width: "100%", marginTop: "5px" }}>
-                    <option value={"yolo"}>Yolo</option>
+                  <select style={{ width: "100%", marginTop: "5px" }} onChange={handleGroupSelection} required>
+                    <option>Select what to search for</option>
+                    <option value={"pokemon/"}>Pokemon</option>
+                    <option value={"berry/"}>Berry</option>
                   </select>
                 </div>
               </div>
