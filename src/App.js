@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer } from "react";
 import "./App.css";
 
-//componants imports
+//components imports
 
 import Search from "./components/search";
 import SearchResults from "./components/searchResults";
@@ -11,6 +11,12 @@ import SearchResults from "./components/searchResults";
 export const SEARCH_ACTIONS = {
   SET_SEARCH_STRING: `setSearchString`,
   SET_SEARCH_GROUP: `setSearchGroup`,
+};
+
+export const RESULTS_ACTIONS = {
+  SET: `setSearchResults`,
+  CLEAR: `clearSearchResults`,
+  ADD: `addSearchResults`,
 };
 
 export const TEAM_ACTIONS = {};
@@ -32,20 +38,39 @@ const searchDispacherFunc = (searchState, action) => {
     default:
       return;
   }
-  console.log(searchString);
   return `https://pokeapi.co/api/v2/${
     searchGroup === `` ? `pokemon/` : searchGroup
   }${searchString}/`;
 };
 
+const searchResultsDispacherFunc = (searchResults, action) => {
+  switch (action.type) {
+    case RESULTS_ACTIONS.ADD:
+      searchResults = [...searchResults, action.payload];
+      break;
+    case RESULTS_ACTIONS.CLEAR:
+      searchResults = action.payload;
+      break;
+    case RESULTS_ACTIONS.SET:
+      break;
+    default:
+      return;
+  }
+  console.log(searchResults);
+  return searchResults;
+};
+
 function App() {
   const [searchState, searchDispacher] = useReducer(searchDispacherFunc, null);
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState(0);
+  const [searchResults, resultsDispatcher] = useReducer(
+    searchResultsDispacherFunc,
+    []
+  );
 
   useEffect(() => {
     if (searchState === null) {
       //change later to handle when search is empty with an object {isActive : false}
-      console.log(searchState);
       return;
     } else {
       fetch(`${searchState}`)
@@ -55,14 +80,21 @@ function App() {
           }
           return response.json();
         })
-        .then((data) => console.log(data));
+        .then((data) => {
+          resultsDispatcher({ type: RESULTS_ACTIONS.ADD, payload: data });
+        });
     }
   }, [submitted]);
 
   return (
     <>
-      <Search searchDispacher={searchDispacher} setSubmitted={setSubmitted} />
-      {searchState !== null && <SearchResults />}
+      <Search searchDispacher={searchDispacher} setSubmitted={setSubmitted} resultsDispatcher={resultsDispatcher}/>
+      {searchState !== null && (
+        <SearchResults
+          searchState={searchState}
+          searchResults={searchResults}
+        />
+      )}
     </>
   );
 }
