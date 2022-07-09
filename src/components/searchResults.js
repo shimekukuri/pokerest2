@@ -4,6 +4,10 @@ import Pokecard from "./pokecard";
 export default function SearchResults(props) {
   const { searchState, searchResults } = props;
 
+  const searchType = (searchResults) => {
+
+  }
+
   return (
     <>
       <div
@@ -40,7 +44,7 @@ export default function SearchResults(props) {
                   width: "100%",
                 }}
               >
-                {searchResults.map((pokemon, i) => (
+                {searchResults.slice().reverse().map((pokemon, i) => (
                   <Pokecard key={i} pokemon={[pokemon]} />
                 ))}
               </div>

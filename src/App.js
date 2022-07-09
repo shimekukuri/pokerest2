@@ -88,7 +88,11 @@ function App() {
 
   return (
     <>
-      <Search searchDispacher={searchDispacher} setSubmitted={setSubmitted} resultsDispatcher={resultsDispatcher}/>
+      <Search
+        searchDispacher={searchDispacher}
+        setSubmitted={setSubmitted}
+        resultsDispatcher={resultsDispatcher}
+      />
       {searchState !== null && (
         <SearchResults
           searchState={searchState}
