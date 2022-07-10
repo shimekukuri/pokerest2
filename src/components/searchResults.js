@@ -44,8 +44,8 @@ export default function SearchResults(props) {
                   width: "100%",
                 }}
               >
-                {searchResults.slice().reverse().map((pokemon, i) => (
-                  <Pokecard key={i} pokemon={[pokemon]} />
+                {searchResults.slice().reverse().map((pokemon) => (
+                  <Pokecard key={pokemon.name} pokemon={[pokemon]} />
                 ))}
               </div>
             </div>
