@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useReducer } from "react";
 import "./App.css";
+import PokeDetails from "./components/pokedetails";
 
 //components imports
 
@@ -17,6 +18,7 @@ export const RESULTS_ACTIONS = {
   SET: `setSearchResults`,
   CLEAR: `clearSearchResults`,
   ADD: `addSearchResults`,
+  SELECT: `pokemonSelected`,
 };
 
 export const TEAM_ACTIONS = {};
@@ -53,6 +55,8 @@ const searchResultsDispacherFunc = (searchResults, action) => {
       break;
     case RESULTS_ACTIONS.SET:
       break;
+    case RESULTS_ACTIONS.SELECT:
+      break;
     default:
       return;
   }
@@ -63,10 +67,14 @@ const searchResultsDispacherFunc = (searchResults, action) => {
 function App() {
   const [searchState, searchDispacher] = useReducer(searchDispacherFunc, null);
   const [submitted, setSubmitted] = useState(0);
+  const [switcher, setSwitcher] = useState(false);
+  const [pokemonFocus, setPokemonFocus] = useState({});
   const [searchResults, resultsDispatcher] = useReducer(
     searchResultsDispacherFunc,
     []
   );
+
+  //useEffect
 
   useEffect(() => {
     if (searchState === null) {
@@ -86,6 +94,15 @@ function App() {
     }
   }, [submitted]);
 
+  //handler functions
+
+  const handlePokemonFocus = (e) => {
+    setSwitcher((prev) => !prev);
+    setPokemonFocus(e);
+  };
+
+  //returned jsx
+
   return (
     <>
       <Search
@@ -93,12 +110,14 @@ function App() {
         setSubmitted={setSubmitted}
         resultsDispatcher={resultsDispatcher}
       />
-      {searchState !== null && (
+      {switcher === false && (
         <SearchResults
           searchState={searchState}
           searchResults={searchResults}
+          onSelect={handlePokemonFocus}
         />
       )}
+      {switcher === true && <PokeDetails pokemonFocus={pokemonFocus} onSelect={handlePokemonFocus} />}
     </>
   );
 }

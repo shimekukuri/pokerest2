@@ -2,24 +2,23 @@ import React from "react";
 import typeColor from "../objects/typecolors";
 
 export default function Pokecard(props) {
-  const { pokemon, key } = props;
+  const { pokemon, key, onSelect } = props;
 
-  console.log(pokemon[0].sprites.front_default);
   return (
     <>
-      <div className="pokecard" key={key}>
+      <div className="pokecard" key={key} onClick={() => onSelect(pokemon)}>
         <div
           style={{
-            margin: "5px",
+            marginLeft: "5px",
             display: "flex",
-            justifyContent: "flex-start",
+            justifyContent: "space-evenly",
           }}
         >
-          <div style={{ maxHeight: "25vh", marginRight: "5px" }}>
-            <div style={{ minHeight: "100%", width: "auto" }}>
-              <img src={pokemon[0].sprites.front_default} alt={"pokemon"} />
-              <div style={{ textAlign: "center" }}>{pokemon[0].name}</div>
-              <div style={{ textAlign: "center", marginBottom: "5px" }}>
+          <div style={{ maxHeight: "25vh", marginRight: "5px"}}>
+            <div style={{ minHeight: "100%", maxHeight: "100%", width: "auto" }}>
+              <img id="pokeimage" src={pokemon[0].sprites.front_default} alt={"pokemon"}/>
+              <div style={{ textAlign: "center", marginTop: "0px" }}>{pokemon[0].name}</div>
+              <div style={{ textAlign: "center"}}>
                 {" "}
                 id: {pokemon[0].id}
               </div>
@@ -52,7 +51,7 @@ export default function Pokecard(props) {
             </ul>
           </div>
           <div className="pokemoves">
-            <ul style={{ listStyle: "none", padding: "0", margin: "0" }}>
+            <ul style={{ listStyle: "none", padding: "0", marginRight: "5px" }}>
               {pokemon[0].moves.map((mov, i) => {
                 return (
                   <>

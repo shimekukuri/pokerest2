@@ -2,7 +2,7 @@ import React from "react";
 import Pokecard from "./pokecard";
 
 export default function SearchResults(props) {
-  const { searchState, searchResults } = props;
+  const { searchState, searchResults, onSelect } = props;
 
   const searchType = (searchResults) => {
 
@@ -45,7 +45,7 @@ export default function SearchResults(props) {
                 }}
               >
                 {searchResults.slice().reverse().map((pokemon) => (
-                  <Pokecard key={pokemon.name} pokemon={[pokemon]} />
+                  <Pokecard key={pokemon.name} pokemon={[pokemon]} onSelect={onSelect}/>
                 ))}
               </div>
             </div>

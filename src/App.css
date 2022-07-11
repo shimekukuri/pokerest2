@@ -4,8 +4,12 @@ html {
 }
 
 ::-webkit-scrollbar {
-  width: 0;  /* Remove scrollbar space */
-  background: transparent;  /* Optional: just make scrollbar invisible */
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+
+.flex-container {
+  display: flex;
 }
 
 .pokecard {
@@ -16,7 +20,7 @@ html {
   transition: all 0.2s ease-in-out;
   border-style: solid;
   border-width: 5px;
-  border-color: red black white black; 
+  border-color: red black white black;
   background-color: rgba(221, 110, 58, 0.733);
   max-height: 30vh;
 }
@@ -52,4 +56,40 @@ html {
 
 .pokecard:hover {
   transform: scale(1.05);
+}
+
+.pokeimage {
+  width: 100%;
+  height: auto;
+}
+
+.focusContainer {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  max-height: 65vh;
+  margin-top: 15px;
+}
+
+.focus-box {
+  background-color: hsla(359, 50%, 50%, 0.79);
+  width: 80vw;
+  border-radius: 5px;
+  min-height: 100%;
+}
+
+.focus-exit-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.focus-exit {
+  background-color: black;
+  color: white;
+  border-radius: 3px;
+  transition: all 0.2s ease-in-out;
+}
+
+.focus-exit:hover {
+  transform: scale(1.2);
 }
